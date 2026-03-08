@@ -79,14 +79,14 @@ Folder structure:
 
 ```
 Files
-├── NYC_taxi_yellow
-│ ├── yellow_tripdata_2024-01.parquet
-│ ├── yellow_tripdata_2024-02.parquet
-│ ├── yellow_tripdata_2024-03.parquet
-│ ├── yellow_tripdata_2024-04.parquet
-│ └── yellow_tripdata_2024-05.parquet
+├── NYCtaxi_yellow
+│ ├── yellow_tripdata_2025-01.parquet
+│ ├── yellow_tripdata_2025-02.parquet
+│ ├── yellow_tripdata_2025-03.parquet
+│ ├── yellow_tripdata_2025-04.parquet
+│ └── yellow_tripdata_2025-05.parquet
 │
-└── NYC_taxi_lookup_zones
+└── NYCtaxi_lookup_zones
 └── taxi_zone_lookup.csv
 ```
 
@@ -110,7 +110,7 @@ Schemas used in the project:
 
 The staging layer contains:
 
-- `staging.NYC_taxi_yellow`
+- `staging.NYCtaxi_yellow`
 - `staging.taxi_zone_lookup`
 
 Characteristics:
@@ -162,7 +162,7 @@ The staging pipeline performs the following steps:
 
 # Staging Pipeline Diagram
 
-> Placeholder – Add staging pipeline diagram here
+<img src="Images/Staging Pipeline.png" width="1000">
 
 ---
 
@@ -175,6 +175,21 @@ The procedure deletes records where pickup dates fall **outside the expected mon
 This ensures the staging table only contains valid records.
 
 ---
+
+# Presentation Pipeline
+
+The presentation pipeline performs the following steps:
+
+1. Transform staging data
+2. Join with lookup table
+3. Load into presentation table
+4. Insert metadata records for tracking
+
+---
+
+# Presentation Pipeline Diagram
+
+<img src="Images/Presentation Pipeline.png" width="500">
 
 # Transformation
 
@@ -205,22 +220,7 @@ Characteristics:
 
 Unlike staging tables, presentation tables are **not cleared between loads**.
 
----
 
-# Presentation Pipeline
-
-The presentation pipeline performs the following steps:
-
-1. Transform staging data
-2. Join with lookup table
-3. Load into presentation table
-4. Insert metadata records for tracking
-
----
-
-# Presentation Pipeline Diagram
-
-> Placeholder – Add presentation pipeline diagram here
 
 
 ---
@@ -235,6 +235,12 @@ Execution order:
 2. Run **Presentation Pipeline**
 
 This enables **end-to-end processing through a single pipeline execution**.
+
+---
+
+# Orchestration Pipeline Diagram
+
+<img src="Images/Final Orchestration Pipeline.png" width="500">
 
 ---
 
@@ -263,6 +269,8 @@ This semantic model is then used to create Power BI reports.
 
 # Power BI Report
 
+<img src="Images/Power BI Report.png" width="800">
+
 The Power BI report provides insights into NYC taxi activity.
 
 Report features include:
@@ -272,6 +280,7 @@ Filters
 - Date range
 - Payment method
 - Vendor
+- Pickup and Dropoff Borough
 
 KPIs
 
@@ -286,13 +295,6 @@ Visualizations
 
 ---
 
-# Power BI Report Placeholder
-
-> Placeholder – Add Power BI report screenshot here
-
-
----
-
 # End-to-End Processing
 
 The full workflow is:
@@ -303,7 +305,7 @@ The full workflow is:
 4. Clean and transform data
 5. Append data to presentation table
 6. Update metadata logs
-7. Refresh Power BI report
+7. Power BI report reflects latest data using Direct Lake
 
 Each pipeline run processes **one additional month of data**.
 
