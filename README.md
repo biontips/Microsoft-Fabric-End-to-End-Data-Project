@@ -193,6 +193,17 @@ The presentation pipeline performs the following steps:
 
 # Transformation
 
+## Data Transformation (Dataflow Gen2)
+
+Data transformation in this project was implemented using two different approaches in Microsoft Fabric:
+
+ - Dataflow Gen2
+ - SQL Stored Procedures
+
+The goal was to compare the performance and efficiency of transformation methods when processing the NYC Taxi dataset.
+
+<img src="Images/Pres Processing Data Flow Gen2.png" width="800">
+
 Data transformation combines taxi trip data with zone lookup data.
 
 Key transformations include:
@@ -319,6 +330,24 @@ The project demonstrates two approaches for transformation:
 2. **Stored Procedure**
 
 Using a **stored procedure** can significantly improve performance compared to Dataflows due to lower overhead.
+
+## Performance Comparison
+
+Both transformation methods were tested on the same dataset to evaluate performance.
+
+| Method | Advantages | Observations |
+|------|------|------|
+| Dataflow Gen2 | Easy to build, visual interface | Slightly slower for large datasets |
+| Stored Procedures | Highly optimized SQL execution | Faster for heavy transformations |
+
+### Observation
+
+Stored Procedures performed faster for large-scale transformations due to **direct SQL execution in the Warehouse engine**, while **Dataflow Gen2** provides better usability and flexibility for low-code transformations.
+
+### Key Takeaway
+
+- **Dataflow Gen2** is ideal for **low-code data preparation**.
+- **Stored Procedures** are better suited for **high-performance transformations at scale**.
 
 ---
 
